@@ -1,6 +1,31 @@
 // Question Link: https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
 
 // Concise Stack Solution
+class Solution {
+public:
+    /*
+    abbaca
+    res = a
+    res = ab
+    res = abb
+    */
+    string removeDuplicates(string S) {
+        if (S.size() == 1) {
+            return S;
+        }
+        string result;
+        for (char &c : S) {
+            if (result.size() > 0 && result.back() == c) {
+                result.pop_back();
+            } else {
+                result += c;
+            }
+        }
+        return result;
+    }
+};
+
+
 // We can consider strings as stacks as well
 class Solution {
 public:

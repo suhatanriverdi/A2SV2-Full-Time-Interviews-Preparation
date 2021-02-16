@@ -16,8 +16,7 @@ public:
             if (cur.first == endWord) {
                 return cur.second;
             }
-            // Get the all transformations can be formed from cur word, then check
-            // If they are in the word list
+            // Get the all transformations can be formed from current word
             for (int c = 0; c < cur.first.size(); c++) {
                 string up = cur.first, down = cur.first;
                 while (islower(++up[c])) {

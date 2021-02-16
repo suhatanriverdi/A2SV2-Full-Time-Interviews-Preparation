@@ -1,5 +1,41 @@
 // Question Link: https://leetcode.com/problems/word-ladder
 
+// Solution 1
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> words(begin(wordList), end(wordList)), seen;
+        // If endWord is not in the list, we cannot reach to the end
+        if (words.find(endWord) == words.end()) {
+            return 0;
+        }
+        queue<pair<string, int>> todo; // {word, step}
+        todo.push({beginWord, 1});
+        while (!todo.empty()) {
+            pair<string, int> cur = todo.front();
+            todo.pop();
+            if (cur.first == endWord) {
+                return cur.second;
+            }
+            // Get the all transformations can be formed from current word
+            string originalWord = cur.first;
+            for (int i = 0; i < cur.first.size(); i++) {
+                for (char l = 'a'; l <= 'z'; l++) {
+                    cur.first[i] = l;
+                    if (words.find(cur.first) != words.end() && seen.find(cur.first) == words.end()) {
+                        todo.push({cur.first, cur.second + 1});
+                        seen.insert(cur.first);
+                    }
+                }
+                // Get back to the original word for next steps
+                cur.first = originalWord;
+            }
+        }
+        return 0;
+    }
+};
+
+// Solution 2
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {

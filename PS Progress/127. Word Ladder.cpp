@@ -1,5 +1,49 @@
 // Question Link: https://leetcode.com/problems/word-ladder
 
+// Solution 0
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> words(begin(wordList), end(wordList)), seen;
+        // If endWord is not in the list, we cannot reach to the end
+        if (words.find(endWord) == words.end()) {
+            return 0;
+        }
+        // Build the graph
+        wordList.push_back(beginWord);
+        unordered_map<string, vector<string>> graph; // {word, {neighbor words}}
+        for (string &word : wordList) {
+            string originalWord = word;
+            for (int i = 0; i < word.size(); i++) {
+                char originalLetter = word[i];
+                word[i] = '*';
+                graph[originalWord].push_back(word);
+                graph[word].push_back(originalWord);
+                word[i] = originalLetter;
+            }
+        }
+        // Run Bfs
+        queue<pair<string, int>> todo; // {word, step}
+        todo.push({beginWord, 0});
+        seen.insert(beginWord);
+        while (!todo.empty()) {
+            pair<string, int> cur = todo.front();
+            todo.pop();
+            if (cur.first == endWord) {
+                return (cur.second / 2) + 1;
+            }
+            // Get the all transformations can be formed from current word
+            for (string &neighbor : graph[cur.first]) {
+                if (seen.find(neighbor) == words.end()) {
+                    todo.push({neighbor, cur.second + 1});
+                    seen.insert(neighbor);
+                }
+            }
+        }        
+        return 0;
+    }
+};
+
 // Solution 1
 class Solution {
 public:

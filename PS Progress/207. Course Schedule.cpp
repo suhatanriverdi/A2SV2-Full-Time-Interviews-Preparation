@@ -1,7 +1,5 @@
 // Question Link: https://leetcode.com/problems/course-schedule/
 
-// Question Link: https://leetcode.com/problems/course-schedule/
-
 // BFS Solution
 class Solution {
 public:

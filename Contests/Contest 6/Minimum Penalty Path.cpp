@@ -1,5 +1,36 @@
 // Question Link: https://www.hackerrank.com/challenges/beautiful-path/problem
 
+// Normal Queue Solution (No need to use PQ)
+int beautifulPath(vector<vector<int>> edges, int A, int B) {
+    vector<vector<pair<int, int>>> graph(10e4 + 1); // {node, {child, weight}}
+    vector<vector<bool>> seen(10e4 + 1, vector<bool>(1024, false)); // {node, {with what weight we came}}
+    for (vector<int> &edge : edges) {
+        graph[edge[0]].push_back({edge[1], edge[2]});
+        graph[edge[1]].push_back({edge[0], edge[2]});
+    }
+    int penaltyCost = INT_MAX;
+    queue<vector<int>> todo; // {weight, node} minHeap
+    todo.push({0, A});
+    seen[A][0] = true; // Assume we reached node A with 0 total weight
+    while (!todo.empty()) {
+        vector<int> cur = todo.front();
+        todo.pop();
+        // If we reach target, save min penalty
+        if (cur[1] == B) {
+            penaltyCost = min(penaltyCost, cur[0]);
+        }
+        for (pair<int, int> &child : graph[cur[1]]) {
+            if (seen[child.first][cur[0] | child.second] == false) {
+                // Update new weight by OR'ing with parent's weight
+                todo.push({cur[0] | child.second, child.first});
+                seen[child.first][cur[0] | child.second] = true;
+            }
+        }
+    }
+    return (penaltyCost == INT_MAX ? -1 : penaltyCost);
+}
+
+// PQ Solution
 class Solution {
 private:
     vector<vector<int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};

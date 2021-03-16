@@ -1,5 +1,40 @@
 // Question Link: https://leetcode.com/problems/maximize-distance-to-closest-person/
 
+// Two Pointer Solution
+class Solution {
+public:
+    int maxDistToClosest(vector<int> &seats) {
+        vector<int> curRange;
+        int maxDist = 0, dist;
+        for (int i = 0; i < seats.size(); i++) {
+            if (seats[i] == 0) {
+                curRange = getMaxZeroSubArray(i, seats);
+                int end = curRange[1];
+                int begin = curRange[0];
+                int curLen = curRange[1] - curRange[0] + 1;
+                // If we are in between 1's
+                if ((end + 1 < seats.size() && seats[end + 1] == 1) &&
+                   (begin - 1 >= 0 && seats[begin - 1] == 1)) {
+                    dist = curLen / 2 + (curLen % 2);
+                    maxDist = max(maxDist, dist);
+                } else {
+                    maxDist = max(maxDist, curLen);
+                }
+                i = curRange[1];
+            }
+        }
+        return maxDist;
+    }
+
+    vector<int> getMaxZeroSubArray(int idx, vector<int> &seats) {
+        int start = idx;
+        for (; idx < seats.size() && seats[idx] == 0; idx++) {};
+        idx--;
+        return {start, idx};
+    }
+};
+
+// BFS Solution
 class Solution {
 public:
     int maxDistToClosest(vector<int>& seats) {

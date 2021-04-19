@@ -1,5 +1,54 @@
 // Question Link: https://leetcode.com/problems/satisfiability-of-equality-equations
 
+// Union Find(Disjoint Set) Solution
+class Solution {
+    int parent[26] = {0}, children[26] = {0};
+public:
+    bool equationsPossible(vector<string>& equations) {
+        // Every node is parent of itself at the beginning
+        for (int i = 0; i < 26; i++) {
+            parent[i] = i;
+        }
+        // Create sets by looking '=='
+        for (string &equ : equations) {
+            int A = equ[0] - 'a';
+            int B = equ[3] - 'a';
+            char sign = equ[1];
+            if (sign == '=') {
+                union_sets(A, B);
+            }
+        }
+        // Check equality by looking '!='
+        for (string &equ : equations) {
+            int A = equ[0] - 'a';
+            int B = equ[3] - 'a';
+            char sign = equ[1];
+            if (sign == '!' && find_set(A) == find_set(B)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // Finds the parent of given node, climbs up to the ancestors
+    int find_set(int v) {
+        if (v == parent[v]) {
+            return v;
+        }
+        return find_set(parent[v]);
+    }
+    
+    // Merges two sets by matching their parents
+    void union_sets(int a, int b) {
+        a = find_set(a);
+        b = find_set(b);
+        if (a != b) {
+            parent[b] = a;
+        }
+    }
+};
+
+// DFS Solution
 class Solution {
 public:
     bool equationsPossible(vector<string> &equations) {

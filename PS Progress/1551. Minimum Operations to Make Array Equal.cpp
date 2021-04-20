@@ -1,5 +1,23 @@
 // Question Link: https://leetcode.com/problems/minimum-operations-to-make-array-equal/
 
+// O(1) Solution
+class Solution {
+public:
+    int minOperations(int n) {
+        int numberOfPairs = n / 2, answer;
+        // If n is odd
+        if (n % 2 == 1) {
+            answer = numberOfPairs * (numberOfPairs + 1);
+        }
+        // If n is even
+        else {
+            answer = numberOfPairs * numberOfPairs;
+        }
+        return answer;
+    }
+};
+
+// O(N) Solution
 class Solution {
 public:
     int minOperations(int n) {

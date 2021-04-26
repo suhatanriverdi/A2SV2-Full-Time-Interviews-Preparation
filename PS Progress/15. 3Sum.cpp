@@ -11,6 +11,9 @@ public:
         set<vector<int>> seen;
         sort(begin(nums), end(nums));
         for (int i = 0; i < N - 2; i++) {
+            if (nums[i] > 0) {
+                break;
+            }
             int j = i + 1;
             int k = N - 1;
             while (j < k) {

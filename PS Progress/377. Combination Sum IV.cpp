@@ -1,5 +1,29 @@
 // Question Link: https://leetcode.com/problems/combination-sum-iv/
 
+// 4ms DP without sorting
+class Solution {
+    unordered_map<int, int> memo;
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        return dfs(nums, target);
+    }
+    
+    int dfs(vector<int> &nums, int sum) {
+        if (memo.find(sum) != memo.end()) {
+            return memo[sum];
+        }
+        if (sum <= 0) {
+            return sum == 0;
+        }
+        int result = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            result += dfs(nums, sum - nums[i]);
+        }
+        memo[sum] = result;
+        return result;
+    }
+};
+
 // 4ms DP memo solution
 class Solution {
     unordered_map<int, int> memo;

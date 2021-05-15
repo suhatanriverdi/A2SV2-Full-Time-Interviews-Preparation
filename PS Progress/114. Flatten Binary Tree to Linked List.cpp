@@ -12,7 +12,7 @@ public:
             // Move left subtree to the right
             if (R->left) {
                 TreeNode* ListPointer = R;
-                moveToRight(R->left, &ListPointer, root);
+                moveToRight(R->left, &ListPointer);
                 R->left = NULL;
             }
             R = R->right;
@@ -24,7 +24,7 @@ public:
     }
     
     // Pre-oerder traversal
-    void moveToRight(TreeNode* cur, TreeNode** ListPointer, TreeNode* root) {
+    void moveToRight(TreeNode* cur, TreeNode** ListPointer) {
         if (cur == NULL) {
             return;
         }
@@ -41,8 +41,8 @@ public:
         // Update Listpointer
         updateListPointer(&(*ListPointer));
         
-        moveToRight(cur->left, ListPointer, root);
-        moveToRight(cur->right, ListPointer, root);
+        moveToRight(cur->left, ListPointer);
+        moveToRight(cur->right, ListPointer);
     }
 };
 

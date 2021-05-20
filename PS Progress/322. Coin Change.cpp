@@ -1,6 +1,52 @@
 // Question Link: https://leetcode.com/problems/coin-change
 
-// Using Array 52ms
+// Bottom Up with Sorting
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        // Each index denotes that the fewest number of coins used to get amount ith
+        // e.g dp[3] = 5 -> we have used 5 coins to get amount = 3 and 5 is the fewest num of coins among the others
+        vector<int> dp(amount + 1, 10001);
+        // Eventually we will have the fewest num of coins to get given amount at the end
+        // We have 0 steps to get 0
+        dp[0] = 0;
+        // Sort to optimize if statement in the loop, we can skip the numbers greater than the amount now
+        sort(begin(coins), end(coins));
+        for (int i = 1; i < amount + 1; i++) {
+            for (int &coin : coins) {
+                if (coin <= i) {
+                    dp[i] = min(dp[i], 1 + dp[i - coin]);
+                } else {
+                    break;
+                }
+            }
+        }
+        return (dp[amount] == 10001 ? -1 : dp[amount]);
+    }
+};
+
+// Bottom Up without Sort
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        // Each index denotes that the fewest number of coins used to get amount ith
+        // e.g dp[3] = 5 -> we have used 5 coins to get amount = 3 and 5 is the fewest num of coins among the others
+        vector<int> dp(amount + 1, 10001);
+        // Eventually we will have the fewest num of coins to get given amount at the end
+        // We have 0 steps to get 0
+        dp[0] = 0;
+        for (int i = 1; i < amount + 1; i++) {
+            for (int &coin : coins) {
+                if (coin <= i) {
+                    dp[i] = min(dp[i], 1 + dp[i - coin]);
+                }
+            }
+        }
+        return (dp[amount] == 10001 ? -1 : dp[amount]);
+    }
+};
+
+// Top Down Using Array 52ms
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
@@ -32,7 +78,7 @@ public:
     }
 };
 
-// Using Map 436ms
+// Top Down Using Map 436ms
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {

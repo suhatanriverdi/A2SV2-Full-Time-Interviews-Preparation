@@ -57,7 +57,7 @@ public:
         return (answer == 10001) ? -1 : answer;
     }
     
-    int helper(int cur, vector<int> &coins, int amount, int memo[]) {
+    int helper(vector<int> &coins, int amount, int memo[]) {
         if (memo[amount] != -1) {
             return memo[amount];
         }
@@ -87,7 +87,7 @@ public:
         return (answer == 10001) ? -1 : answer;
     }
     
-    int helper(int cur, vector<int> &coins, int amount, unordered_map<int, int> &memo) {
+    int helper(vector<int> &coins, int amount, unordered_map<int, int> &memo) {
         if (memo.find(amount) != memo.end()) {
             return memo[amount];
         }

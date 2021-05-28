@@ -21,9 +21,6 @@ public:
                 // Update the next balloon's start point
                 checkStart = (j < size) ? (A[j][0]) : size;
                 checkEnd = (j < size) ? (A[j][1]) : size;
-                if (j >= size) {
-                    break;
-                }
             }
             // Continue processing from the last balloon where we left
             i = j;

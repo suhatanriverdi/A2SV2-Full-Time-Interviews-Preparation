@@ -1,5 +1,24 @@
 // Question Link: https://leetcode.com/problems/maximum-subarray
 
+// O(N) Concise
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum = nums[0], maxSubArraySum = nums[0];
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] > sum + nums[i]) {
+                sum = nums[i];
+                maxSubArraySum = max(maxSubArraySum, sum);
+            }
+            else {
+                sum += nums[i];
+                maxSubArraySum = max(maxSubArraySum, sum);
+            }
+        }
+        return maxSubArraySum;
+    }
+};
+
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {

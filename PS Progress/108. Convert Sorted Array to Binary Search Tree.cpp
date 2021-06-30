@@ -11,6 +11,68 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+// Concise Solution 1
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        int len = nums.size();
+        TreeNode* root = NULL;
+        return helper(root, nums, 0, len - 1);
+    }
+    
+    TreeNode* helper(TreeNode* root, vector<int> &nums, int l, int r) {
+        if (l <= r) {
+            // Find mid value for current subarray
+            int m = l + (r - l) / 2;
+
+            // Create a new node with mid value
+            root = new TreeNode(nums[m]);
+
+            // Go left
+            root->left = helper(NULL, nums, l,  m - 1);
+
+            // Go right
+            root->right = helper(NULL, nums, m + 1,  r);
+        }
+        // Return solution
+        return root;
+    }
+};
+
+// Concise Solution 2
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        int len = nums.size();
+        TreeNode* root = NULL;
+        return helper(root, nums, 0, len - 1);
+    }
+    
+    TreeNode* helper(TreeNode* root, vector<int> &nums, int l, int r) {
+        // Base case
+        if (l > r) {
+            return NULL;
+        }
+        
+        // Find mid value for current subarray
+        int m = l + (r - l) / 2;
+
+        // Create a new node with mid value
+        root = new TreeNode(nums[m]);
+
+        // Go left
+        root->left = helper(NULL, nums, l,  m - 1);
+
+        // Go right
+        root->right = helper(NULL, nums, m + 1,  r);
+        
+        // Return solution
+        return root;
+    }
+};
+
+// Initial Long Solution
 class Solution {
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {

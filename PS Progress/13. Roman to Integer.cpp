@@ -1,5 +1,34 @@
 // Question Link: https://leetcode.com/problems/roman-to-integer/
 
+// More Concise Solution
+class Solution {
+public:
+    int romanToInt(string s) {
+        unordered_map<char, int> symbolValueMap = {
+            {'I', 1},
+            {'V', 5},
+            {'X', 10},
+            {'L', 50},
+            {'C', 100},
+            {'D', 500},
+            {'M', 1000}
+        };
+        int resultInt = 0;
+        int len = s.size();
+        for (int i = len - 1; i >= 0; i--) {
+            if (i - 1 >= 0 && symbolValueMap[s[i - 1]] < symbolValueMap[s[i]]) {
+                resultInt += symbolValueMap[s[i]] - symbolValueMap[s[i - 1]];
+                i--;
+            }
+            else {
+                resultInt += symbolValueMap[s[i]];
+            }
+        }
+        return resultInt;
+    }
+};
+
+// Long Solution
 class Solution {
 public:
     int romanToInt(string s) {

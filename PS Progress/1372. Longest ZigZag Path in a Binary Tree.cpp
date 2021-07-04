@@ -1,5 +1,28 @@
 // Question Link: https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/
 
+// DFS Solution
+class Solution {
+public:
+    int longestZigZag(TreeNode* root) {
+        int ans = 0;
+        helper(root, 'L', 0, ans);
+        helper(root, 'R', 0, ans);
+        return ans;
+    }
+    
+    void helper(TreeNode* cur, char prevDir, int len, int &ans) {
+        if (cur == NULL) {
+            return;
+        }
+        
+        ans = max(ans, len);
+        
+        helper(cur->left, (prevDir == 'R') ? 'L' : 'R', (prevDir == 'R') ? (len + 1) : 0, ans);
+        helper(cur->right, (prevDir == 'L') ? 'R' : 'L', (prevDir == 'L') ? (len + 1) : 0, ans);
+    }
+};
+
+// BFS Solution
 struct info {
     TreeNode* node = NULL;
     char prevDirection = '\0';

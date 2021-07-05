@@ -1,16 +1,36 @@
 // Question Link: https://leetcode.com/problems/binary-search-tree-iterator
 
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+// O(1) Solution
+class BSTIterator {
+private:
+    stack<TreeNode*> statesStack;
+    
+public:
+    BSTIterator(TreeNode* root) {
+        left(root);
+    }
+    
+    void left(TreeNode* cur) {
+        for (; cur; cur = cur->left) {
+            statesStack.push(cur);
+        }
+    }
+    
+    int next() {
+        TreeNode* curNext = statesStack.top();
+        statesStack.pop();
+        if (curNext->right) {
+            left(curNext->right);
+        }
+        return curNext->val;
+    }
+    
+    bool hasNext() {
+        return statesStack.size() > 0;
+    }
+};
+
+// Initial O(N) Solution
 class BSTIterator {
 private:
     int it = 0;
@@ -37,10 +57,3 @@ public:
         return it < elements.size();
     }
 };
-
-/**
- * Your BSTIterator object will be instantiated and called as such:
- * BSTIterator* obj = new BSTIterator(root);
- * int param_1 = obj->next();
- * bool param_2 = obj->hasNext();
- */

@@ -6,6 +6,10 @@ public:
         int N = nums.size(), result = 1;
         vector<int> memo(N, -1);
         for (int i = 0; i < N; i++) {
+            // A Bit Optimization
+            if (N - i <= result) {
+                break;
+            }
             result = max(result, helper(i, N, nums, memo));
         }
         return result;
